@@ -24,7 +24,7 @@
 		font-weight: 100;
 	}
 
-	@media (min-width: 640px) {
+	@media screen and (min-width: 640px) {
 		main {
 			max-width: none;
 		}
