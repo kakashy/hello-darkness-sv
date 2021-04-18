@@ -1,8 +1,11 @@
 <script>
 	export let name;
+
+	import Nav from './components/nav.svelte'
 </script>
 
 <main>
+	<Nav/>
 	<h1>Hello {name}!</h1>
 	<p>My old friend</p>
 </main>
@@ -10,11 +13,10 @@
 <style>
 	main {
 		text-align: center;
-		padding: 1em;
 		max-width: 240px;
-		margin: 0 auto;
+		margin: 0;
 		background-color: #0D0F12;
-		color: #fff100;
+		color: #fffcc4;
 	}
 
 	h1 {

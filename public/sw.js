@@ -4,10 +4,10 @@ const assets = [
     '/k_fav.png',
     '/global.css',
     '/index.html',
-    '/bundle',
-    '/bundle/bundle.css',
-    '/bundle/bundle.js',
-    'bundle/bundle.js.map'
+    '/build',
+    '/build/bundle.css',
+    '/build/bundle.js',
+    '/build/bundle.js.map'
 ]
 self.addEventListener('install', installEvent=>{
     installEvent.waitUntil(
