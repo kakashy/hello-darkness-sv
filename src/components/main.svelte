@@ -19,26 +19,45 @@
       thoughts: thoughtValue,
     };
     var thoughtRes = await tdb.put(thoughtDoc);
+
+    this.parentNode.parentNode.parentNode.style.display = "none";
   }
   let thoughtys = [];
   onMount(async () => {
     const tdb = new PouchDB("thoughts");
-    
-    const sniffRes = await tdb.allDocs({ include_docs: true });
-    const { rows } = sniffRes;
-    thoughtys = rows;
-    thoughtys = thoughtys;
-});
 
-async function handleDelete(event){
+    async function sniff() {
+      const sniffRes = await tdb.allDocs({ include_docs: true });
+      const { rows } = sniffRes;
+      thoughtys = rows;
+    }
+    sniff();
+    var changes = tdb
+      .changes({
+        since: "now",
+        live: true,
+      })
+      .on("change", function (change) {
+        // super volatile event here
+      })
+      .on("complete", function (info) {
+        // changes() was canceled
+        sniff();
+      })
+      .on("error", function (err) {
+        console.log(err);
+      });
+  });
+
+  async function handleDelete(event) {
     const tdb = new PouchDB("thoughts");
-    const {parentNode, id} = this;
+    const { parentNode, id } = this;
     var thoughtID = id;
 
     var thoughtDoc = await tdb.get(thoughtID);
     var finisher = await tdb.remove(thoughtDoc);
     parentNode.style.display = "none";
-}
+  }
 </script>
 
 <div class="main">
@@ -49,7 +68,7 @@ async function handleDelete(event){
     </label>
     <div class="add-modal" id="add-modal">
       <div class="modal-cont">
-        <form class="add-th" on:submit={addThought}>
+        <div class="add-th" on:submit={addThought}>
           <span
             class="close"
             onclick="this.parentNode.parentNode.parentNode.style.display='none';"
@@ -61,17 +80,21 @@ async function handleDelete(event){
             <option value="24">1 Day</option>
           </select>
           <textarea type="textarea" placeholder="thoughts" id="thoughts" />
-          <button type="submit" id="save-thoughts">Save Thoughts</button>
-        </form>
+          <button type="submit" id="save-thoughts" on:click={addThought}
+            >Save Thoughts</button
+          >
+        </div>
       </div>
     </div>
   </div>
   <div id="show-thought" on:loadstart={console.log("fck")}>
     {#each thoughtys as thoughty}
-    <figure>
+      <figure>
         <p>{thoughty.doc.thoughts}</p>
-        <button id={thoughty.doc._id.toString()} on:click={handleDelete}>Delete</button>
-    </figure>
+        <button id={thoughty.doc._id.toString()} on:click={handleDelete}
+          >Delete</button
+        >
+      </figure>
     {:else}
       <p>It's dry out here...</p>
     {/each}
@@ -79,45 +102,44 @@ async function handleDelete(event){
 </div>
 
 <style>
-    figure {
-        width: inherit;
-        border-radius: 10px;
-        padding: 5px;
-        background-color: #ffffff33;
-        box-shadow: #00000030 8px 8px 15px, #00000030 -5px -5px 15px;
-        transition: 200ms ease-in-out;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        max-height: 400px;
-        overflow-x: hidden;
-    }
-    figure::-webkit-scrollbar {
-        width: 0.5rem;
-        height: 0.2rem;
-    }
-    figure::-webkit-scrollbar-thumb {
-        background-color: rgb(255, 85, 23);
-    }
-    figure::-webkit-scrollbar-track {
-        background-color: transparent;
-    }
-    figure:hover {
-        box-shadow: #00000030 5px 5px 10px, #00000030 -2px -2px 10px;
-        transform: scale(0.97);
-    }
-    figure button {
-        position: relative;
-        bottom: 0;
-        width: inherit;
-        background-color: rgb(238, 160, 132);
-        color: white;
-    }
-    figure button:hover {
-        background-color: rgb(255, 85, 23);
-
-    }
-  form {
+  figure {
+    width: inherit;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #ffffff33;
+    box-shadow: #00000030 8px 8px 15px, #00000030 -5px -5px 15px;
+    transition: 200ms ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-height: 400px;
+    overflow-x: hidden;
+  }
+  figure::-webkit-scrollbar {
+    width: 0.5rem;
+    height: 0.2rem;
+  }
+  figure::-webkit-scrollbar-thumb {
+    background-color: rgb(255, 85, 23);
+  }
+  figure::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  figure:hover {
+    box-shadow: #00000030 5px 5px 10px, #00000030 -2px -2px 10px;
+    transform: scale(0.97);
+  }
+  figure button {
+    position: relative;
+    bottom: 0;
+    width: inherit;
+    background-color: rgb(243, 128, 86);
+    color: white;
+  }
+  figure button:hover {
+    background-color: rgb(255, 85, 23);
+  }
+  .add-th {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -139,7 +161,8 @@ async function handleDelete(event){
     border: rgba(255, 97, 40, 0.37) solid 1px;
     border-radius: 5px;
     margin: 10px;
-    background-color: #ffffff20;
+    background-color: #0d0f12;
+    transition: 150ms ease-in-out;
     list-style: none;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
