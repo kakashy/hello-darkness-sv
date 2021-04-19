@@ -3,8 +3,10 @@
   import Login from "./components/login.svelte";
   import Main from "./components/main.svelte";
   import pouchdb721Min from "../public/res/pouchdb-7.2.1.min";
+import { onMount } from "svelte";
 
-  function sync(){
+  onMount(
+  async()=>{
   var tdb = new pouchdb721Min("toughts");
   var rdb = new pouchdb721Min(
     "https://e6b140c8-fa3f-4bf4-854a-ce9d2befab62-bluemix.cloudantnosqldb.appdomain.cloud/"
@@ -33,12 +35,12 @@
       // handle error
 	  console.log(err)
     });
-}
+})
 </script>
 
 <main>
   <Nav />
-  <div class="bod" on:load={sync}>
+  <div class="bod">
     <Login />
     <Main/>
   </div>
