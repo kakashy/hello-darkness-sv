@@ -7,6 +7,7 @@ import { onMount } from "svelte";
 
   onMount(
   async()=>{
+  async function synchro(){
   var tdb = new pouchdb721Min("toughts");
   var rdb = new pouchdb721Min(
     "https://e6b140c8-fa3f-4bf4-854a-ce9d2befab62-bluemix.cloudantnosqldb.appdomain.cloud/"
@@ -35,7 +36,9 @@ import { onMount } from "svelte";
       // handle error
 	  console.log(err)
     });
-})
+    } 
+    // synchro();
+    })
 </script>
 
 <main>

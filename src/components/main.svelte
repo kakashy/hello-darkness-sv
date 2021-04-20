@@ -19,7 +19,6 @@
       thoughts: thoughtValue,
     };
     var thoughtRes = await tdb.put(thoughtDoc);
-
     this.parentNode.parentNode.parentNode.style.display = "none";
   }
   let thoughtys = [];
@@ -37,11 +36,15 @@
         since: "now",
         live: true,
       })
-      .on("change", function (change) {
-        // super volatile event here
-      })
+       .on("change", function (change) {
+         // super volatile event here
+         setInterval(() => {
+           sniff();
+         }, 3000);
+       })
       .on("complete", function (info) {
         // changes() was canceled
+        console.log(info);
         sniff();
       })
       .on("error", function (err) {
@@ -79,7 +82,7 @@
             <option value="5">5 Hours</option>
             <option value="24">1 Day</option>
           </select>
-          <textarea type="textarea" placeholder="thoughts" id="thoughts" />
+          <textarea type="textarea" placeholder="thoughts" id="thoughts" onclick="this.value=''"/>
           <button type="submit" id="save-thoughts" on:click={addThought}
             >Save Thoughts</button
           >
