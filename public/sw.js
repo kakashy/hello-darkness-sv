@@ -1,4 +1,5 @@
-const cache = 'darkness'
+const oldcache = 'darkness'
+const cache = 'darkness_v2'
 const assets = [
     '/',
     '/k_fav.png',
@@ -15,7 +16,8 @@ self.addEventListener('install', installEvent=>{
         caches.open(cache)
         .then(cache =>
             cache.addAll(assets))
-    )
+            )
+            caches.delete(oldcache)
 })
 self.addEventListener('fetch', fetchEvent=>{
     fetchEvent.respondWith(
