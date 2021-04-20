@@ -59,7 +59,7 @@
 
     var thoughtDoc = await tdb.get(thoughtID);
     var finisher = await tdb.remove(thoughtDoc);
-    parentNode.style.display = "none";
+    // parentNode.style.display = "none";
   }
 </script>
 
