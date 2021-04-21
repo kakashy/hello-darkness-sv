@@ -37,10 +37,7 @@
         live: true,
       })
        .on("change", function (change) {
-         // super volatile event here
-         setInterval(() => {
-           sniff();
-         }, 3000);
+         sniff();
        })
       .on("complete", function (info) {
         // changes() was canceled
