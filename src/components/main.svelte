@@ -1,5 +1,7 @@
 <script>
   import { onMount } from "svelte";
+  import { fly } from "svelte/transition";
+
   function showModal() {
     const modal = document.getElementById("add-modal");
     modal.style.display = "block";
@@ -87,9 +89,9 @@
       </div>
     </div>
   </div>
-  <div id="show-thought" on:loadstart={console.log("fck")}>
+  <div id="show-thought">
     {#each thoughtys as thoughty}
-      <figure>
+      <figure transition:fly="{{y: 50, duration: 400}}">
         <p>{thoughty.doc.thoughts}</p>
         <button id={thoughty.doc._id.toString()} on:click={handleDelete}
           >Delete</button
