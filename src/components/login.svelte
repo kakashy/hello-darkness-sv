@@ -6,7 +6,7 @@
     </label>
     <label for="pass">
         Password
-        <input type="text" placeholder="Password" id="pass">
+        <input type="password" placeholder="Password" id="pass">
     </label>
     <label for="loginBtn">
         <button type="submit" id="loginBtn">Log In</button>
