@@ -1,5 +1,5 @@
-const oldcache = 'darkness'
-const cache = 'darkness_v2'
+const oldcache = 'darkness_v2'
+const cache = 'darkness_v1'
 const assets = [
     '/',
     '/k_fav.png',
