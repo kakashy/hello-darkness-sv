@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
+  import marked from 'marked';
 
   function showModal() {
     const modal = document.getElementById("add-modal");
@@ -92,7 +93,7 @@
   <div id="show-thought">
     {#each thoughtys as thoughty}
       <figure transition:fly="{{y: 50, duration: 400}}">
-        <p>{thoughty.doc.thoughts}</p>
+        <p>{@html marked(thoughty.doc.thoughts)}</p>
         <button id={thoughty.doc._id.toString()} on:click={handleDelete}
           >Delete</button
         >
