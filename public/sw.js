@@ -1,10 +1,11 @@
-const oldcache = 'darkness_v1'
-const cache = 'darkness_v2'
+const oldcache = 'darkness_v2'
+const cache = 'darkness_v3'
 const assets = [
     '/',
     '/k_fav.png',
     '/global.css',
     '/index.html',
+    '/sw.js',
     '/res/pouchdb-7.2.1.min.js',
     '/build',
     '/build/bundle.css',
